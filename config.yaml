@@ -1,0 +1,58 @@
+# Configuration for Pneumonia Detection with AI Governance
+
+# Model Configuration
+model:
+  architecture: "resnet18"
+  pretrained: true
+  num_classes: 2
+  freeze_backbone: false  # Set to true to freeze early layers
+
+# Training Configuration
+training:
+  batch_size: 16
+  num_epochs: 3
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  early_stopping_patience: 5
+  
+# Data Configuration
+data:
+  image_size: 224
+  train_split: 0.85
+  val_split: 0.15
+  num_workers: 4
+  
+# Data Augmentation
+augmentation:
+  rotation_degrees: 15
+  horizontal_flip: 0.5
+  brightness: 0.2
+  contrast: 0.2
+  
+# Fairness Configuration
+fairness:
+  sensitive_attribute_prob: 0.5  # Probability for Group A=1
+  dpd_threshold: 0.1  # Acceptable demographic parity difference
+  
+# Robustness Configuration
+robustness:
+  noise_levels: [0.0, 0.05, 0.1, 0.15, 0.2]
+  noise_std_multiplier: 255  # To convert normalized noise to pixel space
+  
+# Governance Risk Index (GRI) Configuration
+gri:
+  dpd_weight: 0.25
+  robustness_weight: 0.15
+  ethics_checklist_score: 0.9  # Placeholder (0-1)
+  
+# Paths
+paths:
+  data_dir: "./archive2/chest_xray/chest_xray/"
+  output_dir: "./outputs"
+  checkpoint_dir: "./checkpoints"
+  logs_dir: "./logs"
+  
+# Visualization
+visualization:
+  grad_cam_layer: "layer4"  # ResNet layer for Grad-CAM
+  num_samples_to_visualize: 10
